@@ -2,16 +2,31 @@
   <img style="width: 100px" alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Vue3 with Vuex 4 example" />
   <router-link to='/'><b>Trang chủ</b></router-link> |
-  <router-link to='/login'><b>Login</b></router-link> |
+  <router-link v-if="!isLoggedin" to='/login'><b>Login</b></router-link>
+  <router-link v-if="isLoggedin" to="#"><b @click="logout()">{{user.realname}} - <a>Logout</a></b></router-link> |
+  <router-link v-if="isLoggedin" to='/me'><b>About me</b></router-link>
 
   <router-view/>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 export default {
   setup() {
-
+    const store = useStore()
+    const user = computed(() => store.getters['login/userData'])
+    const isLoggedin = computed(() => store.getters['login/isLoggedin'])
+    const logout = () => {
+      store.dispatch('login/doLogout')
+      
+    }
+    return {
+      isLoggedin,
+      user,
+      logout
+    }
   },
   components: {
     HelloWorld

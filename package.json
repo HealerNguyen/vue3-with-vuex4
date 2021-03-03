@@ -1,6 +1,7 @@
 {
   "name": "vue3-with-vuex4",
   "version": "0.0.0",
+  "author": "TuanNguyen",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
